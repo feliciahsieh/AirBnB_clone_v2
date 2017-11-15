@@ -1,6 +1,6 @@
 #!/usr/bin/python3                                                             
 """create the engine"""
-
+import os
 from models.base_model import BaseModel, Base
 from models.amenity import Amenity
 from models.city import City
@@ -30,20 +30,36 @@ class DBStorage:
                 os.environ.get('HBNB_MYSQL_PWD'),
                 os.environ.get('HBNB_MYSQL_HOST'),
                 os.environ.get('HBNB_MYSQL_DB')))
-        if get('HBNB_ENV') == 'test':
+        if os.environ.get('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         '''dictionary like FileStorage Method'''
+        dict = {}
+        for c in classes:
+            if cls is None or cls is classes[c]:
+                objects = self.__session.query(classes[c]).all()
+                for key in objects:
+                    new_key = key.__class__.__name__ + "." + key.id
+                    dict[new_key] = key
+                    print("Dict: {}".format(dict))
+        return dict
 
     def new(self, obj):
         '''Add object to current database session'''
+        self.__session.add(obj)
 
     def save(self):
         '''commit all changes of the current database session'''
+        self.__session.commit()
 
     def delete(self, obj=None):
         '''delete from the current database session'''
-
+        if obj is not None:
+            self.__session.delete(obj)
     def reload(self):
         '''create all tables in the database'''
+        Base.metadata.create_all(self.__engine)
+        a = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(a)
+        self.__session = Session()
