@@ -4,8 +4,8 @@
 import cmd
 from datetime import datetime
 import models
-from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -35,12 +35,45 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Creates a new instance of a class"""
+        def isfloat(x):
+            try:
+                a = float(x)
+            except ValueError:
+                return False
+            else:
+                return True
+
+        def isint(x):
+            try:
+                a = float(x)
+                b = int(a)
+            except ValueError:
+                return False
+            else:
+                return a == b
+
         args = shlex.split(arg)
+        print("My Args:{}".format(args))
         if len(args) == 0:
             print("** class name missing **")
             return False
         if args[0] in classes:
             instance = classes[args[0]]()
+            # loop to read ALL params                                               
+            for i in range(1, len(args)):
+                d = {}
+                kv = args[i].split('=')
+                # Replace _ with space                                              
+                kv[1] = kv[1].replace('_', ' ')
+                # Float / Integer                                                   
+                if isint(kv[1]):
+                    kv[1] = int(kv[1])
+                elif isfloat(kv[1]):
+                    kv[1] = float(kv[1])
+                d[kv[0]] = kv[1]
+                k = kv[0]
+                v = d[kv[0]]
+                setattr(instance, k, v)
         else:
             print("** class doesn't exist **")
             return False
