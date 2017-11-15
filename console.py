@@ -53,7 +53,6 @@ class HBNBCommand(cmd.Cmd):
                 return a == b
 
         args = shlex.split(arg)
-        print("My Args:{}".format(args))
         if len(args) == 0:
             print("** class name missing **")
             return False
