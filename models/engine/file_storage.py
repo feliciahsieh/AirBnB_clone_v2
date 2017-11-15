@@ -24,7 +24,7 @@ class FileStorage:
     # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
-    def all(self):
+    def all(self, cls=None):
         """returns the dictionary __objects"""
         return self.__objects
 
@@ -41,6 +41,13 @@ class FileStorage:
             json_objects[key] = self.__objects[key].to_dict()
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
+
+    def delete(self, obj=None):
+        """to delete obj from __objects if it’s inside"""
+        if obj is not None:
+            key = obj.__class__.__name__ + "." + obj.id
+            if key in self.__objects:
+                del self.__objects[key]
 
     def reload(self):
         """deserializes the JSON file to __objects"""
