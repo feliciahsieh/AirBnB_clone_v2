@@ -14,7 +14,8 @@ class State(BaseModel, Base):
         cities = relationship("City", backref="state")
     elif models.storage_type == "file":
         name = ""
-         @property
+
+        @property
         def cities(self):
             list = []
             c = models.storage.all(City)

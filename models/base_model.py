@@ -6,6 +6,9 @@ Contains class BaseModel
 from datetime import datetime
 import models
 import uuid
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String, DateTime, ForeignKey
+
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 if models.storage_type == "db":
