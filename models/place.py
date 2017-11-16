@@ -22,6 +22,8 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
         reviews = relationship("Review", backref="place")
+        amenities = relationship(
+                 "Amenity", viewonly=False, secondary=place_amenity)
     else:
         city_id = ""
         user_id = ""
@@ -43,6 +45,21 @@ class Place(BaseModel, Base):
                 if item.place_id == self.id:
                     list.append(item)
             return list
+
+        @property
+        def amenities(self):
+            list = []
+            c = models.storage.all(Amenity)
+            for item in c.values():
+                if item.place_id == self.id:
+                    list.append(item)
+            return list
+    
+    place_amenity = Table('amenity', Base.metadata,
+                           Column('place_id', ForeignKey(places.id), String(60), nullable=False)
+                           Column('amenity_id', ForeignKey(amenities.id), String(60), nullable=False) 
+                  
+
 
     def __init__(self, *args, **kwargs):
         """initializes Place"""
