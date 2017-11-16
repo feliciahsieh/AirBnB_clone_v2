@@ -1,4 +1,4 @@
-#!/usr/bin/python3                                                             
+#!/usr/bin/python3
 """create the engine"""
 import os
 from models.base_model import BaseModel, Base
@@ -46,7 +46,7 @@ class DBStorage:
         else:
             objects = self.__session.query(cls).all()
             for item in objects:
-                k = item.__class__.__name__ + "." + item.id                
+                k = item.__class__.__name__ + "." + item.id
                 dict[k] = item
             return dict
 
@@ -62,6 +62,7 @@ class DBStorage:
         '''delete from the current database session'''
         if obj is not None:
             self.__session.delete(obj)
+
     def reload(self):
         '''create all tables in the database'''
         Base.metadata.create_all(self.__engine)
