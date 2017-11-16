@@ -34,7 +34,6 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
-        
 
         @property
         def review(self):
@@ -44,7 +43,6 @@ class Place(BaseModel, Base):
                 if item.place_id == self.id:
                     list.append(item)
             return list
-
 
     def __init__(self, *args, **kwargs):
         """initializes Place"""
