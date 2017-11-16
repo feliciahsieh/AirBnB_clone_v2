@@ -11,10 +11,10 @@ if models.storage_type == "db":
     place_amenity = Table('amenity',
                           Base.metadata,
                           Column('place_id',
-                                 ForeignKey(places.id),
+                                 ForeignKey('places.id'),
                                  String(60), nullable=False),
                           Column('amenity_id',
-                                 ForeignKey(amenities.id),
+                                 ForeignKey('amenities.id'),
                                  String(60),
                                  nullable=False))
 
