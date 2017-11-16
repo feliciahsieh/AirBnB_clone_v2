@@ -36,14 +36,19 @@ class DBStorage:
     def all(self, cls=None):
         '''dictionary like FileStorage Method'''
         dict = {}
-        for c in classes:
-            if cls is None or cls is classes[c]:
-                objects = self.__session.query(classes[c]).all()
-                for key in objects:
-                    k = key.__class__.__name__ + "." + key.id
-                    dict[k] = key
-                    print("Dict: {}".format(dict))
-        return dict
+        if cls is None:
+            objects = self.__session.query().all()
+            print('OBJ', objects)
+            for item in objects:
+                k = item.__class__.__name__ + "." + item.id
+                dict[k] = item
+            return dict
+        else:
+            objects = self.__session.query(cls).all()
+            for item in objects:
+                k = item.__class__.__name__ + "." + item.id                
+                dict[k] = item
+            return dict
 
     def new(self, obj):
         '''Add object to current database session'''
