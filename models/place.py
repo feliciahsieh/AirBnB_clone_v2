@@ -1,21 +1,15 @@
 #!/usr/bin/python
 """ holds class Place"""
-<<<<<<< HEAD
 from models.base_model import BaseModel, Base
 import models
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
-=======
-from models.base_model import BaseModel
-import models
->>>>>>> 5c46638946db577f15b2e5a83c6a3f0c659d0969
 
 
 class Place(BaseModel, Base):
     """Representation of Place """
     if models.storage_type == "db":
-<<<<<<< HEAD
         __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
@@ -27,9 +21,6 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-=======
-        pass
->>>>>>> 5c46638946db577f15b2e5a83c6a3f0c659d0969
     else:
         city_id = ""
         user_id = ""
