@@ -3,8 +3,20 @@
 from models.base_model import BaseModel, Base
 import models
 import sqlalchemy
-from sqlalchemy import Column, String, Integer, ForeignKey, Float
+from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
+
+
+if models.storage_type == "db":
+    place_amenity = Table('amenity',
+                          Base.metadata,
+                          Column('place_id',
+                                 ForeignKey(places.id),
+                                 String(60), nullable=False),
+                          Column('amenity_id',
+                                 ForeignKey(amenities.id),
+                                 String(60),
+                                 nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -54,12 +66,6 @@ class Place(BaseModel, Base):
                 if item.place_id == self.id:
                     list.append(item)
             return list
-
-    place_amenity = Table('amenity', Base.metadata,
-                          Column('place_id', ForeignKey(places.id),
-                                 String(60), nullable=False)
-                          Column('amenity_id', ForeignKey(amenities.id),
-                                 String(60), nullable=False))
 
     def __init__(self, *args, **kwargs):
         """initializes Place"""
