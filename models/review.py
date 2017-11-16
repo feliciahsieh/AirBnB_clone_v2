@@ -1,12 +1,12 @@
 #!/usr/bin/python
 """ holds class Review"""
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 import models
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 
-class Review(BaseModel):
+class Review(BaseModel, Base):
     """Representation of Review """
     if models.storage_type == "db":
         __tablename__ = 'reviews'
