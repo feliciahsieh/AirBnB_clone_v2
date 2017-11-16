@@ -21,6 +21,7 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
+        reviews = relationship("Review", backref="place")
     else:
         city_id = ""
         user_id = ""
@@ -33,6 +34,17 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+        
+
+        @property
+        def review(self):
+            list = []
+            c = models.storage.all(Review)
+            for item in c.values():
+                if item.place_id == self.id:
+                    list.append(item)
+            return list
+
 
     def __init__(self, *args, **kwargs):
         """initializes Place"""
