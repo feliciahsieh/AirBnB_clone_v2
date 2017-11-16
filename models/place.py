@@ -36,7 +36,7 @@ class Place(BaseModel, Base):
         amenity_ids = []
 
         @property
-        def review(self):
+        def reviews(self):
             list = []
             c = models.storage.all(Review)
             for item in c.values():
