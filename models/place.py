@@ -47,6 +47,7 @@ class Place(BaseModel, Base):
 
         @property
         def reviews(self):
+            '''getter'''
             list = []
             c = models.storage.all(Review)
             for item in c.values():
@@ -56,6 +57,7 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
+            '''getter'''
             list = []
             c = models.storage.all(Amenity)
             for item in c.values():

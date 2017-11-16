@@ -58,13 +58,13 @@ class HBNBCommand(cmd.Cmd):
             return False
         if args[0] in classes:
             instance = classes[args[0]]()
-            # loop to read ALL params                                               
+            # loop to read ALL params
             for i in range(1, len(args)):
                 d = {}
                 kv = args[i].split('=')
-                # Replace _ with space                                              
+                # Replace _ with space
                 kv[1] = kv[1].replace('_', ' ')
-                # Float / Integer                                                   
+                # Float / Integer
                 if isint(kv[1]):
                     kv[1] = int(kv[1])
                 elif isfloat(kv[1]):
@@ -131,8 +131,6 @@ class HBNBCommand(cmd.Cmd):
         print("[", end="")
         print(", ".join(obj_list), end="")
         print("]")
-
-
 
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
