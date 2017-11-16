@@ -23,8 +23,10 @@ class BaseModel:
 
     if models.storage_type == "db":
         id = Column(String(60), primary_key=True, nullable=False, unique=True)
-        created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
-        updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+        created_at = Column(
+            DateTime, nullable=False, default=datetime.utcnow())
+        updated_at = Column(
+            DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""
@@ -32,12 +34,16 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, value)
-                if kwargs.get("created_at", None) and type(self.created_at) is str:
-                    self.created_at = datetime.strptime(kwargs["created_at"], time)
+                if kwargs.get("created_at", None) and type(
+                        self.created_at) is str:
+                    self.created_at = datetime.strptime(
+                        kwargs["created_at"], time)
                 else:
                     self.created_at = datetime.utcnow()
-                if kwargs.get("updated_at", None) and type(self.updated_at) is str:
-                    self.updated_at = datetime.strptime(kwargs["updated_at"], time)
+                if kwargs.get("updated_at", None) and type(
+                        self.updated_at) is str:
+                    self.updated_at = datetime.strptime(
+                        kwargs["updated_at"], time)
                 else:
                     self.updated_at = datetime.utcnow()
                 if kwargs.get("id", None) is None:
