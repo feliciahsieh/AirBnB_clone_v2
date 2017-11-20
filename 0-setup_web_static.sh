@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Deploy webservers (web01, web02) in web_static using Fabric
+# 142.44.167.237 214-web-01 144.217.246.206 214-web-02
+
+# install nginx
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo sed -i "/^.*#.*/! s/server_name localhost;*$/server_name localhost;\n\tadd_header X-Served-By $HOSTNAME;/" /etc/nginx/sites-available/default
+sudo service nginx restart
+
+# create folders
+sudo mkdir -p /data/
+sudo mkdir -p /data/web_static/
+sudo mkdir -p /data/web_static/releases/
+sudo mkdir -p /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/
+
+# create basic HTML file
+newHTML="<html>
+  <head>
+  </head>
+  <body>
+    Holberton School
+  </body>
+</html>"
+echo "$newHTML" > /data/web_static/releases/test/index.html
+
+# create new symbolic link
+if [ -L /data/web_static/current ]
+then sudo rm /data/web_static/current
+fi
+sudo ln -s /data/web_static/current /data/web_static/releases/test/
+
+# change owner & group of /data/ to ubuntu
+sudo chown -R ubuntu /data
+sudo chown -R ubuntu:ubuntu /data
+
+# update nginx to serve content of /data/web_static/current to hbnb_static
+
+# restart nginx
+sudo service nginx restart
