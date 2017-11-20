@@ -5,8 +5,6 @@
 # install nginx
 sudo apt-get update
 sudo apt-get -y install nginx
-sudo sed -i "/^.*#.*/! s/server_name localhost;*$/server_name localhost;\n\tadd_header X-Served-By $HOSTNAME;/" /etc/nginx/sites-available/default
-sudo service nginx restart
 
 # create folders
 sudo mkdir -p /data/
@@ -16,20 +14,19 @@ sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 
 # create basic HTML file
-newHTML="<html>
+sudo echo "<html>
   <head>
   </head>
   <body>
-    Holberton School
+Holberton School
   </body>
-</html>"
-echo "$newHTML" > /data/web_static/releases/test/index.html
+</html>" > /data/web_static/releases/test/index.html
 
 # create new symbolic link
 if [ -L /data/web_static/current ]
 then sudo rm /data/web_static/current
 fi
-sudo ln -s /data/web_static/current /data/web_static/releases/test/
+sudo ln -s /data/web_static/releases/test/ /data/web_static/current
 
 # change owner & group of /data/ to ubuntu
 sudo chown -R ubuntu /data
