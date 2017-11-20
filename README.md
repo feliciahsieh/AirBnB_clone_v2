@@ -1,163 +1,114 @@
-# AirBnB Clone - The Console
-The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
-
-#### Functionalities of this command interpreter:
-* Create a new object (ex: a new User or a new Place)
-* Retrieve an object from a file, a database etc...
-* Do operations on objects (count, compute stats, etc...)
-* Update attributes of an object
-* Destroy an object
-
-## Table of Content
-* [Environment](#environment)
-* [Installation](#installation)
-* [File Descriptions](#file-descriptions)
-* [Usage](#usage)
-* [Examples of use](#examples-of-use)
-* [Bugs](#bugs)
-* [Authors](#authors)
-* [License](#license)
-
-## Environment
-This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
-
-## Installation
-* Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
-* Access AirBnb directory: `cd AirBnB_clone`
-* Run hbnb(interactively): `./console` and enter command
-* Run hbnb(non-interactively): `echo "<command>" | ./console.py`
-
-## File Descriptions
-[console.py](console.py) - the console contains the entry point of the command interpreter. 
-List of commands this console current supports:
-* `EOF` - exits console 
-* `quit` - exits console
-* `<emptyline>` - overwrites default emptyline method and does nothing
-* `create` - Creates a new instance of`BaseModel`, saves it (to the JSON file) and prints the id
-* `destroy` - Deletes an instance based on the class name and id (save the change into the JSON file). 
-* `show` - Prints the string representation of an instance based on the class name and id.
-* `all` - Prints all string representation of all instances based or not on the class name. 
-* `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). 
-
-#### `models/` directory contains classes used for this project:
-[base_model.py](/models/base_model.py) - The BaseModel class from which future classes will be derived
-* `def __init__(self, *args, **kwargs)` - Initialization of the base model
-* `def __str__(self)` - String representation of the BaseModel class
-* `def save(self)` - Updates the attribute `updated_at` with the current datetime
-* `def to_dict(self)` - returns a dictionary containing all keys/values of the instance
-
-Classes inherited from Base Model:
-* [amenity.py](/models/amenity.py)
-* [city.py](/models/city.py)
-* [place.py](/models/place.py)
-* [review.py](/models/review.py)
-* [state.py](/models/state.py)
-* [user.py](/models/user.py)
-
-#### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
-[file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
-* `def all(self)` - returns the dictionary __objects
-* `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
-* `def save(self)` - serializes __objects to the JSON file (path: __file_path)
-* ` def reload(self)` -  deserializes the JSON file to __objects
-
-#### `/tests` directory contains all unit test cases for this project:
-[/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
-TestBaseModelDocs class:
-* `def setUpClass(cls)`- Set up for the doc tests
-* `def test_pep8_conformance_base_model(self)` - Test that models/base_model.py conforms to PEP8
-* `def test_pep8_conformance_test_base_model(self)` - Test that tests/test_models/test_base_model.py conforms to PEP8
-* `def test_bm_module_docstring(self)` - Test for the base_model.py module docstring
-* `def test_bm_class_docstring(self)` - Test for the BaseModel class docstring
-* `def test_bm_func_docstrings(self)` - Test for the presence of docstrings in BaseModel methods
-
-TestBaseModel class:
-* `def test_is_base_model(self)` - Test that the instatiation of a BaseModel works
-* `def test_created_at_instantiation(self)` - Test created_at is a pub. instance attribute of type datetime
-* `def test_updated_at_instantiation(self)` - Test updated_at is a pub. instance attribute of type datetime
-* `def test_diff_datetime_objs(self)` - Test that two BaseModel instances have different datetime objects
-
-[/test_models/test_amenity.py](/tests/test_models/test_amenity.py) - Contains the TestAmenityDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_amenity(self)` - Test that models/amenity.py conforms to PEP8
-* `def test_pep8_conformance_test_amenity(self)` - Test that tests/test_models/test_amenity.py conforms to PEP8
-* `def test_amenity_module_docstring(self)` - Test for the amenity.py module docstring
-* `def test_amenity_class_docstring(self)` - Test for the Amenity class docstring
-
-[/test_models/test_city.py](/tests/test_models/test_city.py) - Contains the TestCityDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_city(self)` - Test that models/city.py conforms to PEP8
-* `def test_pep8_conformance_test_city(self)` - Test that tests/test_models/test_city.py conforms to PEP8
-* `def test_city_module_docstring(self)` - Test for the city.py module docstring
-* `def test_city_class_docstring(self)` - Test for the City class docstring
-
-[/test_models/test_file_storage.py](/tests/test_models/test_file_storage.py) - Contains the TestFileStorageDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_file_storage(self)` - Test that models/file_storage.py conforms to PEP8
-* `def test_pep8_conformance_test_file_storage(self)` - Test that tests/test_models/test_file_storage.py conforms to PEP8
-* `def test_file_storage_module_docstring(self)` - Test for the file_storage.py module docstring
-* `def test_file_storage_class_docstring(self)` - Test for the FileStorage class docstring
-
-[/test_models/test_place.py](/tests/test_models/test_place.py) - Contains the TestPlaceDoc class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_place(self)` - Test that models/place.py conforms to PEP8.
-* `def test_pep8_conformance_test_place(self)` - Test that tests/test_models/test_place.py conforms to PEP8.
-* `def test_place_module_docstring(self)` - Test for the place.py module docstring
-* `def test_place_class_docstring(self)` - Test for the Place class docstring
-
-[/test_models/test_review.py](/tests/test_models/test_review.py) - Contains the TestReviewDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_review(self)` - Test that models/review.py conforms to PEP8
-* `def test_pep8_conformance_test_review(self)` - Test that tests/test_models/test_review.py conforms to PEP8
-* `def test_review_module_docstring(self)` - Test for the review.py module docstring
-* `def test_review_class_docstring(self)` - Test for the Review class docstring
-
-[/test_models/state.py](/tests/test_models/test_state.py) - Contains the TestStateDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_state(self)` - Test that models/state.py conforms to PEP8
-* `def test_pep8_conformance_test_state(self)` - Test that tests/test_models/test_state.py conforms to PEP8
-* `def test_state_module_docstring(self)` - Test for the state.py module docstring
-* `def test_state_class_docstring(self)` - Test for the State class docstring
-
-[/test_models/user.py](/tests/test_models/test_user.py) - Contains the TestUserDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_user(self)` - Test that models/user.py conforms to PEP8
-* `def test_pep8_conformance_test_user(self)` - Test that tests/test_models/test_user.py conforms to PEP8
-* `def test_user_module_docstring(self)` - Test for the user.py module docstring
-* `def test_user_class_docstring(self)` - Test for the User class docstring
+<h1 class="gap">0x03. AirBnB clone - Deploy static</h1>
 
 
-## Examples of use
-```
-vagrantAirBnB_clone$./console.py
-(hbnb) help
+<h4 class="task">
+    0. Prepare your web servers
+      <span class="alert alert-warning mandatory-optional">
+        mandatory
+      </span>
+</h4><p>Write a Bash script that sets up your web servers for the deployment of <code>web_static</code>. It must:</p><ul>
+<li>Install Nginx if it not already installed</li>
+<li>Create the folder <code>/data/</code> if it doesn’t already exist</li>
+<li>Create the folder <code>/data/web_static/</code> if it doesn’t already exist</li>
+<li>Create the folder <code>/data/web_static/releases/</code> if it doesn’t already exist</li>
+<li>Create the folder <code>/data/web_static/shared/</code> if it doesn’t already exist</li>
+<li>Create the folder <code>/data/web_static/releases/test/</code> if it doesn’t already exist</li>
+<li>Create a fake HTML file <code>/data/web_static/releases/test/index.html</code> (with simple content, to test your Nginx configuration)</li>
+<li>Create a symbolic link <code>/data/web_static/current</code> linked to the <code>/data/web_static/releases/test/</code> folder. If the symbolic link already exists, it should be deleted and recreated every time the script is ran.</li>
+<li>Give ownership of the <code>/data/</code> folder to the <code>ubuntu</code> user AND group (you can assume this user and group exist). This should be recursive; everything inside should be created/owned by this user/group.</li>
+<li>Update the Nginx configuration to serve the content of <code>/data/web_static/current/</code> to <code>hbnb_static</code> (ex: <code>https://mydomainname.tech/hbnb_static</code>). Don’t forget to restart Nginx after updating the configuration:
 
-Documented commands (type help <topic>):
-========================================
-EOF  all  create  destroy  help  quit  show  update
+<ul>
+<li>Use <code>alias</code> inside your Nginx configuration</li>
+<li><a href="/rltoken/kGBgDBs1rNj_N3eyy5juYA" target="_blank" title="Tip">Tip</a></li>
+</ul></li>
+</ul><p>Your program should always exit successfully.
+<strong>Don’t forget to run your script on both of your web servers.</strong></p><p>In optional, you will redo this task but by using Puppet</p>
 
-(hbnb) all MyModel
-** class doesn't exist **
-(hbnb) create BaseModel
-7da56403-cc45-4f1c-ad32-bfafeb2bb050
-(hbnb) all BaseModel
-[[BaseModel] (7da56403-cc45-4f1c-ad32-bfafeb2bb050) {'updated_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772167), 'id': '7da56403-cc45-4f1c-ad32-bfafeb2bb050', 'created_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772123)}]
-(hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
-[BaseModel] (7da56403-cc45-4f1c-ad32-bfafeb2bb050) {'updated_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772167), 'id': '7da56403-cc45-4f1c-ad32-bfafeb2bb050', 'created_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772123)}
-(hbnb) destroy BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
-(hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
-** no instance found **
-(hbnb) quit
-```
 
-## Bugs
-No known bugs at this time. 
+<h4 class="task">
+    1. Compress before sending
+      <span class="alert alert-warning mandatory-optional">
+        mandatory
+      </span>
+</h4><p>Write a Fabric script that generates a <a href="/rltoken/Y2c7VhkIhpTf3O4W-IYRRQ" target="_blank" title=".tgz">.tgz</a> archive from the contents of the <code>web_static</code> folder of your AirBnB Clone repo, using the function <code>do_pack</code>.</p><ul>
+<li>Prototype: <code>def do_pack():</code></li>
+<li>All files in the folder <code>web_static</code> must be added to the final archive</li>
+<li>All archives must be stored in the folder <code>versions</code> (your function should create this folder if it doesn’t exist)</li>
+<li>The name of the archive created must be <code>web_static_&lt;year&gt;&lt;month&gt;&lt;day&gt;&lt;hour&gt;&lt;minute&gt;&lt;second&gt;.tgz</code></li>
+<li>The function <code>do_pack</code> must return the archive path if the archive has been correctly generated. Otherwise, it should return <code>None</code></li>
+</ul>
 
-## Authors
-Wendy Segura - [Github](https://github.com/wendysegura) / [Twitter](https://twitter.com/gwenevere05)  
-Felicia Hsieh - [Github](https://github.com/feliciahsieh) / [Twitter](https://twitter.com/feliciahsiehsw)  
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)  
 
-## License
-Public Domain. No copy write protection. 
+<h4 class="task">
+    2. Deploy archive!
+      <span class="alert alert-warning mandatory-optional">
+        mandatory
+      </span>
+</h4><p>Write a Fabric script (based on the file <code>1-pack_web_static.py</code>) that distributes an archive to your web servers, using the function <code>do_deploy</code>:</p><ul>
+<li>Prototype: <code>def do_deploy(archive_path):</code></li>
+<li>Returns <code>False</code> if the file at the path <code>archive_path</code> doesn’t exist</li>
+<li>The script should take the following steps:
+
+<ul>
+<li>Upload the archive to the <code>/tmp/</code> directory of the web server</li>
+<li>Uncompress the archive to the folder <code>/data/web_static/releases/&lt;archive filename without extension&gt;</code> on the web server</li>
+<li>Delete the archive from the web server</li>
+<li>Delete the symbolic link <code>/data/web_static/current</code> from the web server</li>
+<li>Create a new the symbolic link <code>/data/web_static/current</code> on the web server, linked to the new version of your code (<code>/data/web_static/releases/&lt;archive filename without extension&gt;</code>)</li>
+</ul></li>
+<li>All remote commands must be executed on your both web servers (using <code>env.hosts = ['&lt;IP web-01&gt;', 'IP web-02']</code> variable in your script)</li>
+<li>Returns <code>True</code> if all operations has been done correctly, otherwise returns <code>False</code></li>
+</ul><p>In the following example, the SSH key and the username used for accessing to the server are passed in the command line. Of course, you could define them as Fabric environment variables (ex: <code>env.user =...</code>)</p>
+
+
+<h4 class="task">
+    3. Full deployment
+      <span class="alert alert-warning mandatory-optional">
+        mandatory
+      </span>
+</h4><p>Write a Fabric script (based on the file <code>2-do_deploy_web_static.py</code>) that creates and distributes an archive to your web servers, using the function <code>deploy</code>:</p><ul>
+<li>Prototype: <code>def deploy():</code></li>
+<li>The script should take the following steps:
+
+<ul>
+<li>Call the <code>do_pack()</code> function and store the path of the created archive</li>
+<li>Return <code>False</code> if no archive has been created</li>
+<li>Call the <code>do_deploy(archive_path)</code> function, using the new path of the new archive</li>
+<li>Return the return value of <code>do_deploy</code></li>
+</ul></li>
+<li>All remote commands must be executed on both of web your servers (using <code>env.hosts = ['&lt;IP web-01&gt;', 'IP web-02']</code> variable in your script)</li>
+</ul><p>In the following example, the SSH key and the username used for accessing to the server are passed in the command line. Of course, you could define them as Fabric environment variables (ex: env.user =…)</p>
+
+
+<h4 class="task">
+    4. Keep it clean!
+      <span class="alert alert-info mandatory-optional">
+        #advanced
+      </span>
+</h4><p>Write a Fabric script (based on the file <code>3-deploy_web_static.py</code>) that deletes out-of-date archives, using the function <code>do_clean</code>:</p><ul>
+<li>Prototype: <code>def do_clean(number=0):</code></li>
+<li><code>number</code> is the number of the archives, including the most recent, to keep.
+
+<ul>
+<li>If <code>number</code> is 0 or 1, keep only the most recent version of your archive. </li>
+<li>if <code>number</code> is 2, keep the most recent, and second most recent versions of your archive.</li>
+<li>etc.</li>
+</ul></li>
+<li>Your script should:
+
+<ul>
+<li>Delete all unnecessary archives (all archives minus the number to keep) in the <code>versions</code> folder</li>
+<li>Delete all unnecessary archives (all archives minus the number to keep) in the <code>/data/web_static/releases</code> folder of both of your web servers</li>
+</ul></li>
+<li>All remote commands must be executed on both of your web servers (using the <code>env.hosts = ['&lt;IP web-01&gt;', 'IP web-02']</code> variable in your script)</li>
+</ul><p>In the following example, the SSH key and the username used for accessing to the server are passed in the command line. Of course, you could define them as Fabric environment variables (ex: env.user =…)</p>
+
+
+<h4 class="task">
+    5. Puppet for setup
+      <span class="alert alert-info mandatory-optional">
+        #advanced
+      </span>
+</h4><p>Redo the task #0 but by using Puppet:</p>
+
