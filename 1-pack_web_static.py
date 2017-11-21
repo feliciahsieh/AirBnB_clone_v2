@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-import os, errno
 from datetime import datetime
-from fabric.api import local, run, env, hosts, local
+from fabric.api import run, hosts, local, env
 
 @hosts(['142.44.167.237'])
 def do_pack():
@@ -13,11 +12,9 @@ def do_pack():
 
     now = datetime.now().strftime("%Y%m%d%H%M%S")
     fn = "web_static_" + now + ".tgz"
-    print(fn)
 
-    local("tar -cvzf {} web_static".format(fn))
-
-    result = local("mkdir versions")
+    local("mkdir -p versions")
+    result = local("tar -cvzf {} web_static".format(fn))
     if result.failed:
         return None
     else:
