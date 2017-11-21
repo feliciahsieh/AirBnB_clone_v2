@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import datetime
+from datetime import datetime
 from fabric.api import local, run, env
 
 
@@ -16,9 +16,8 @@ def do_pack():
     env.archive_source = '/data/web_static'
 
     # archive name, arbitrary, and only for transport
-    now = datetime.datetime.now()
-    env.archive_name = "web_static_" + str(now.year) + str(now.month) + \
- str(now.day) + str(now.hour) + str(now.minute) + str(now.second) + ".tgz"
+    now = datetime.now().strftime("%Y%m%d%H%M%S")
+    env.archive_name = "web_static_" + now + ".tgz"
 
     result = run("mkdir versions")
     if result.failed:
@@ -33,6 +32,7 @@ def do_pack():
     # symlink name. Full path to deployed code is env.deploy_project_root + this
     env.deploy_current_dir = 'current'
 
+    result = local("tar -cvzf {} web_static".format(env.archive_name))
     if result.failed:
         return None
     else:
