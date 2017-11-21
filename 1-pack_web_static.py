@@ -1,31 +1,23 @@
 #!/usr/bin/python3
-import os, errno
-import tarfile
 import datetime
-import time
+from fabric.api import local
 from fabric.api import *
-
 
 def do_pack():
     """ do_pack - create a compressed tar file """
 
     now = datetime.datetime.now()
-    fn = "web_static_" + str(now.year) + str(now.month) + str(now.day) + str(now.hour) + str(now.minute) + str(now.
-second) + ".tgz"
-    print(fn)
+    fn = "web_static_" + str(now.year) + str(now.month) + \
+ str(now.day) + str(now.hour) + str(now.minute) + str(now.second) + ".tgz"
 
-    tar = tarfile.open(fn, "w")
-    for name in ["/data/web_static"]:
-        tar.add(name)
-
-    tar.close()
-
-    directory = "./versions"
-    result = run("mkdir " + directory)
+    dirSrc = "/data/web_static"
+    dirDest = "versions"
+    result = run("mkdir " + dirDest)
     if result.failed:
-        print("failed mkdir()")
+        return None
+
+    result = cxn.run('tar -cvzf ' + dirDest + '/' + fn + ' web_static')
+    if result.failed:
+        return None
     else:
-        print(directory)
-
-
-do_pack()
+        return(fn)
