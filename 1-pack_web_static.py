@@ -29,7 +29,7 @@ def do_pack():
     # specify name of dir that will hold all deployed code
     env.deploy_release_dir = 'versions/'
 
-    # symlink name. Full path to deployed code is env.deploy_project_root + this
+    # symlink name. Full path is env.deploy_project_root + this
     env.deploy_current_dir = 'current'
 
     result = local("tar -cvzf {} web_static".format(env.archive_name))
