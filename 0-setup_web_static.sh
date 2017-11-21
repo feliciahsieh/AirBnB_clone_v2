@@ -21,7 +21,7 @@ sudo echo "<html>
   <body>
 Holberton School
   </body>
-</html>" > /data/web_static/releases/test/index.html
+</html>" | sudo tee /data/web_static/releases/test/index.html
 
 # create new symbolic link
 if [ -L /data/web_static/current ]
@@ -34,7 +34,7 @@ sudo chown -R ubuntu /data
 sudo chown -R ubuntu:ubuntu /data
 
 # update nginx to serve content of /data/web_static/current to hbnb_static
-sed -i '16i\\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}' /etc/nginx/sites-available/default
+sudo sed -i '37i\\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}' /etc/nginx/sites-available/default
 
 # restart nginx
 sudo service nginx restart
