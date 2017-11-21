@@ -8,7 +8,7 @@ def do_pack():
     """ Ref: https://gist.github.com/elliottb/7744008 """
 
     # remote ssh credentials
-    env.hosts = ['142.44.167.237']
+    env.hosts = ['142.44.167.237', '144.217.246.206']
     env.user = 'ubuntu'
     env.key_filename = '~/.ssh/holberton_key'
 
