@@ -17,7 +17,7 @@ def do_pack():
 
     local("tar -cvzf {} web_static".format(fn))
 
-    result = run("mkdir versions")
+    result = local("mkdir versions")
     if result.failed:
         return None
     else:
