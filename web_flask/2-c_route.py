@@ -14,16 +14,11 @@ def hbnb():
     """hbnb"""
     return 'HBNB'
 
-@app.route('/c/', strict_slashes=False)
-def c():
-    """c"""
-    return 'blank %s' % text
-
 @app.route('/c/<text>', strict_slashes=False)
-def c(text):
-    """c"""
-    """text = text.replace('_', ' ')"""
-    return 'C %s' % text
+def cWithVariable(text):
+    """cWithVariable"""
+    text = text.replace('_', ' ')
+    return "C {}".format(text)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
