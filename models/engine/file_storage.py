@@ -58,3 +58,7 @@ class FileStorage:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
         except:
             pass
+
+    def close(self):
+        """deserializing the JSON file to objects"""
+        reload()
